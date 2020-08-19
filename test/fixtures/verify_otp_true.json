@@ -1,0 +1,9 @@
+{
+  "verified": true,
+  "new_user": true,
+  "mob": 123,
+  "status": "customer",
+  "updatedAt": "time",
+  "_id": "unique_id",
+  "token": "test_token"
+}

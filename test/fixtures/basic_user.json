@@ -1,0 +1,7 @@
+{
+  "newUser": false,
+  "mob": 123,
+  "status": "customer",
+  "updatedAt": "time",
+  "_id": "unique_id"
+}

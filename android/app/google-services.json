@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "945180933471",
+    "firebase_url": "https://freshok-c15a4.firebaseio.com",
+    "project_id": "freshok-c15a4",
+    "storage_bucket": "freshok-c15a4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:945180933471:android:1682ee1154bb1c03418aea",
+        "android_client_info": {
+          "package_name": "com.freshhaat.consumer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "945180933471-n1g8rtml3n7gb9bo6p858cmmqlc7hnmq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeaUW_Ij2Qc4D0F2vgW9WlwVFVRXl9DLo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "945180933471-n1g8rtml3n7gb9bo6p858cmmqlc7hnmq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:945180933471:android:39e99080db707e61418aea",
+        "android_client_info": {
+          "package_name": "com.freshhaat.retailer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "945180933471-n1g8rtml3n7gb9bo6p858cmmqlc7hnmq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeaUW_Ij2Qc4D0F2vgW9WlwVFVRXl9DLo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "945180933471-n1g8rtml3n7gb9bo6p858cmmqlc7hnmq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

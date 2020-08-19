@@ -1,0 +1,7 @@
+1. Entity in domain
+2. Repo in domain
+3. Usecase in domain
+
+4. data model in data
+5. Repo in data
+5. datasources in data
