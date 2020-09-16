@@ -8,6 +8,7 @@ class Mitra extends BaseModel {
   int customers;
   final String profilePhoto;
   final String mitraId;
+  final bool active;
 
   Mitra({
     @required this.name,
@@ -16,6 +17,7 @@ class Mitra extends BaseModel {
     @required this.customers,
     @required this.profilePhoto,
     @required this.mitraId,
+    @required this.active,
   });
 
   @override
@@ -26,5 +28,6 @@ class Mitra extends BaseModel {
         customers,
         profilePhoto,
         mitraId,
+        active,
       ];
 }

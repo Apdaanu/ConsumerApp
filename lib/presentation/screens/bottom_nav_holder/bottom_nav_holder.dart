@@ -18,6 +18,7 @@ import 'blocs/bottom_nav/bottom_nav_bloc.dart';
 import 'blocs/cart_bloc/cart_bloc.dart';
 import 'blocs/edit_address_bloc/edit_address_bloc.dart';
 import 'blocs/home_section/home_section_bloc.dart';
+import 'blocs/mitra_bloc/mitra_bloc.dart';
 import 'blocs/order_bloc/order_bloc.dart';
 import 'blocs/pop_address_bloc/pop_address_bloc.dart';
 import 'blocs/suggested_products_bloc/suggested_products_bloc.dart';
@@ -45,6 +46,7 @@ class _BottomNavHolderState extends State<BottomNavHolder> {
   CartBloc _cartBloc;
   EditAddressBloc _editAddressBloc;
   PopLockBloc _popLockBloc;
+  MitraBloc _mitraBloc;
 
   @override
   void initState() {
@@ -59,14 +61,15 @@ class _BottomNavHolderState extends State<BottomNavHolder> {
     _suggestedProductsBloc = sl<SuggestedProductsBloc>();
     _editAddressBloc = sl<EditAddressBloc>();
     _popLockBloc = context.bloc<PopLockBloc>();
+    _mitraBloc = context.bloc();
 
     _userDetailsBloc.add(InitUserDetailsEvent(
       (userId) {
         _homeSectionBloc.add(HomeSectionInitEvent());
+        _mitraBloc.add(MitraInitEvent(mitraId: _userDetailsBloc.userDetails.mitraId, userId: userId));
         _suggestedProductsBloc.add(SuggestedProductsInitEvent(userId));
         _recepieHomeBloc.add(RecepieHomeInit(userId));
-        _editAddressBloc
-            .add(EditAddressInitEvent(_userDetailsBloc.userDetails));
+        _editAddressBloc.add(EditAddressInitEvent(_userDetailsBloc.userDetails));
       },
     ));
     _cartBloc.add(CartInitEvent());
@@ -178,31 +181,26 @@ class _BottomNavHolderState extends State<BottomNavHolder> {
                     semanticsLabel: 'A red up arrow',
                     height: 20 * measure.fontRatio,
                   ),
-                  title:
-                      Text('HOME', style: TextStyle(fontFamily: 'Open Sans')),
+                  title: Text('HOME', style: TextStyle(fontFamily: 'Open Sans')),
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.fastfood, size: 20 * measure.fontRatio),
-                  title: Text('RECIPES',
-                      style: TextStyle(fontFamily: 'Open Sans')),
+                  title: Text('RECIPES', style: TextStyle(fontFamily: 'Open Sans')),
                 ),
                 BottomNavigationBarItem(
                   icon: BlocProvider.value(
                     value: _cartBloc,
                     child: BadgeIcon(),
                   ),
-                  title:
-                      Text('CART', style: TextStyle(fontFamily: 'Open Sans')),
+                  title: Text('CART', style: TextStyle(fontFamily: 'Open Sans')),
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.description, size: 20 * measure.fontRatio),
-                  title:
-                      Text('ORDERS', style: TextStyle(fontFamily: 'Open Sans')),
+                  title: Text('ORDERS', style: TextStyle(fontFamily: 'Open Sans')),
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.share, size: 20 * measure.fontRatio),
-                  title: Text('REFER & EARN',
-                      style: TextStyle(fontFamily: 'Open Sans')),
+                  title: Text('REFER & EARN', style: TextStyle(fontFamily: 'Open Sans')),
                 )
               ],
             ),
@@ -236,9 +234,7 @@ class _BottomNavHolderState extends State<BottomNavHolder> {
                               _popAddressBloc.add(PopAddressEvent.hide);
                             },
                             child: Container(
-                              height: measure.screenHeight -
-                                  370 -
-                                  measure.keyboardHeight,
+                              height: measure.screenHeight - 370 - measure.keyboardHeight,
                               width: measure.width,
                               color: Colors.transparent,
                             ),

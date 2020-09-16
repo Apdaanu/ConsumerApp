@@ -62,9 +62,7 @@ class _DrawerContentsState extends State<DrawerContents> {
                       SizedBox(width: 10 + measure.width * 0.02),
                       CircleAvatar(
                         radius: 28 * measure.fontRatio,
-                        backgroundImage: Image.network(
-                                _userDetailsBloc.userDetails.profilePhoto)
-                            .image,
+                        backgroundImage: Image.network(_userDetailsBloc.userDetails.profilePhoto).image,
                         backgroundColor: Colors.transparent,
                       ),
                       SizedBox(width: 10 + measure.width * 0.01),
@@ -129,10 +127,7 @@ class _DrawerContentsState extends State<DrawerContents> {
                         cubit: _referralBloc,
                         builder: (context, state) => RegularText(
                           text: AppTheme.currencySymbol +
-                              (state is ReferralLoaded
-                                  ? _referralBloc.referral.freshOkCredit
-                                      .toString()
-                                  : '60'),
+                              (state is ReferralLoaded ? _referralBloc.referral.freshOkCredit.toString() : '60'),
                           color: Colors.white,
                           fontSize: AppTheme.regularTextSize,
                         ),

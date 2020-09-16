@@ -3,18 +3,17 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:freshOk/core/usecases/usecase.dart';
-import 'package:freshOk/domain/usecases/places/get_places.dart';
-import 'package:freshOk/domain/usecases/registerUser/register_user.dart';
-import 'package:freshOk/domain/usecases/services/dynamic_link_service.dart';
-import 'package:freshOk/domain/usecases/user_details/get_user_details.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../../core/usecases/usecase.dart';
+import '../../../../domain/usecases/places/get_places.dart';
+import '../../../../domain/usecases/registerUser/register_user.dart';
+import '../../../../domain/usecases/services/dynamic_link_service.dart';
 
 part 'registration_screen_event.dart';
 part 'registration_screen_state.dart';
 
-class RegistrationScreenBloc
-    extends Bloc<RegistrationScreenEvent, RegistrationScreenState> {
+class RegistrationScreenBloc extends Bloc<RegistrationScreenEvent, RegistrationScreenState> {
   final RegisterUser registerUser;
   final ActivateReferral activateReferral;
   final GetPlaces getPlaces;
@@ -37,8 +36,7 @@ class RegistrationScreenBloc
   ) async* {
     if (event is RegisterUserInitEvent) {
       yield RegisterUserLoading();
-      this.referralController.text =
-          sharedPreferences.getString(REFERRAL_CACHE);
+      this.referralController.text = sharedPreferences.getString(REFERRAL_CACHE) ?? '';
       final failureOrPlaces = await getPlaces(NoParams());
       yield* failureOrPlaces.fold(
         (l) => null,
@@ -58,9 +56,7 @@ class RegistrationScreenBloc
 
     if (event is RegisterUserSelectCityEvent) {
       this.cityId = event.cityId;
-      List<dynamic> areas =
-          places[places.indexWhere((element) => element.id == event.cityId)]
-              .areas;
+      List<dynamic> areas = places[places.indexWhere((element) => element.id == event.cityId)].areas;
       yield RegisterUserCitySelected(areas);
     }
 

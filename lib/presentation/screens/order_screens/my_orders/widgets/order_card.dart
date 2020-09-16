@@ -13,7 +13,7 @@ final colorMap = {
   'Packed': Color(0xffF7AE18),
   'Dispatched': Color(0xffF7AE18),
   'Delivered to mitra': Color(0xff563e7b),
-  'Completed': Color(0xff563e7b),
+  'Delivered': Color(0xff563e7b),
   'Cancelled by team': Color(0xffe76450),
   'Cancelled by mitra': Color(0xffe76450),
   'Cancelled by user': Color(0xffe76450),
@@ -167,9 +167,7 @@ class OrderCardBody extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.center,
                   child: RegularText(
-                    text: payMethod == 'cod'
-                        ? 'Cash On Delivery'
-                        : Util.capitalize(payMethod),
+                    text: payMethod == 'cod' ? 'Cash On Delivery' : Util.capitalize(payMethod),
                     color: AppTheme.black2,
                     fontSize: AppTheme.smallTextSize,
                   ),

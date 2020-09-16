@@ -132,8 +132,7 @@ class _CartScreenState extends State<CartScreen> {
                 bottom: 0,
                 child: Container(
                   width: measure.width,
-                  padding: EdgeInsets.symmetric(
-                      vertical: 10 + measure.screenHeight * 0.01),
+                  padding: EdgeInsets.symmetric(vertical: 10 + measure.screenHeight * 0.01),
                   color: Colors.white,
                   alignment: Alignment.center,
                   child: CustomButton(
@@ -146,7 +145,7 @@ class _CartScreenState extends State<CartScreen> {
                           _popAddressBloc.add(PopAddressEvent.show);
                           return;
                         }
-                        if (_mitraBloc.selMitra == null) {
+                        if (_mitraBloc.selMitra == null || !_mitraBloc.selMitra.active) {
                           Navigator.pushNamed(context, selectMitraRoute);
                           return;
                         }
@@ -170,17 +169,14 @@ class _CartScreenState extends State<CartScreen> {
                         // );
                       }
                     },
-                    color: _cartScreenBloc.postingCart
-                        ? Colors.grey[300]
-                        : AppTheme.primaryColor,
+                    color: _cartScreenBloc.postingCart ? Colors.grey[300] : AppTheme.primaryColor,
                     child: Center(
                       child: _cartScreenBloc.postingCart
                           ? SizedBox(
                               height: 20,
                               width: 20,
                               child: CircularProgressIndicator(
-                                valueColor: new AlwaysStoppedAnimation<Color>(
-                                    AppTheme.primaryColor),
+                                valueColor: new AlwaysStoppedAnimation<Color>(AppTheme.primaryColor),
                                 strokeWidth: 2,
                               ),
                             )
@@ -211,8 +207,7 @@ class _CartScreenState extends State<CartScreen> {
               opacity: _cartScreenBloc.showCoupons ? 1 : 0,
               duration: Duration(milliseconds: 150),
               child: Container(
-                height:
-                    _cartScreenBloc.showCoupons ? measure.screenHeight - 50 : 0,
+                height: _cartScreenBloc.showCoupons ? measure.screenHeight - 50 : 0,
                 width: measure.width,
                 color: Color(0x30000000),
                 child: Column(
@@ -229,9 +224,7 @@ class _CartScreenState extends State<CartScreen> {
                     ),
                     AnimatedContainer(
                       duration: Duration(milliseconds: 150),
-                      height: _cartScreenBloc.showCoupons
-                          ? (measure.screenHeight - 50) * 0.75
-                          : 0,
+                      height: _cartScreenBloc.showCoupons ? (measure.screenHeight - 50) * 0.75 : 0,
                       width: measure.width,
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -287,17 +280,14 @@ class _CartScreenState extends State<CartScreen> {
                           ),
                           Container(
                             width: measure.width,
-                            height: (measure.screenHeight - 50) * 0.75 -
-                                measure.topBarHeight,
+                            height: (measure.screenHeight - 50) * 0.75 - measure.topBarHeight,
                             color: Colors.white,
                             child: SingleChildScrollView(
                               child: BlocProvider.value(
                                 value: _cartScreenBloc,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: _cartScreenBloc.showCoupons
-                                      ? _renderCoupons(_cartScreenBloc.coupons)
-                                      : [],
+                                  children: _cartScreenBloc.showCoupons ? _renderCoupons(_cartScreenBloc.coupons) : [],
                                 ),
                               ),
                             ),
@@ -364,9 +354,7 @@ class CouponCard extends StatelessWidget {
     CartScreenBloc cartScreenBloc = context.bloc<CartScreenBloc>();
     Measure measure = MeasureImpl(context);
 
-    bool isSelected = cartScreenBloc.selCoupon != null
-        ? cartScreenBloc.selCoupon.id == coupon.id
-        : false;
+    bool isSelected = cartScreenBloc.selCoupon != null ? cartScreenBloc.selCoupon.id == coupon.id : false;
 
     return Container(
       padding: EdgeInsets.symmetric(

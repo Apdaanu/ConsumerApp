@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
+import '../../../../../domain/usecases/services/dialog_service.dart';
+import '../../../mitra_screens/select_mitra_screen/select_mitra_screen.dart';
 
 import '../../../../../domain/entities/mitra/mitra.dart';
 import '../../../../../domain/usecases/mitra/get_mitras.dart';
@@ -41,11 +43,10 @@ class MitraBloc extends Bloc<MitraEvent, MitraState> {
           (mitras) async* {
             print('[sys] : mitras succesfully fetched : $mitras');
             this.mitras = mitras;
+            this.mitras.sort((a, b) => a.customers > b.customers ? -1 : 1);
+            this.mitras.sort((a, b) => a.active == b.active ? 0 : a.active ? -1 : 1);
             this.loaded = true;
             this.userId = event.userId;
-            print('[dbg] : ${mitras[0].mitraId}');
-            print('[dbg] : ${mitras[1].mitraId}');
-            print('[dbg] : ${event.mitraId}');
             if (event.mitraId != null) {
               this.selMitra = mitras[mitras.indexWhere(
                 (element) => element.mitraId == event.mitraId,
@@ -60,8 +61,15 @@ class MitraBloc extends Bloc<MitraEvent, MitraState> {
     }
 
     if (event is MitraSelectEvent) {
-      if (this.selMitra == null ||
-          event.mitra.mitraId != this.selMitra.mitraId) {
+      if (this.selMitra == null || event.mitra.mitraId != this.selMitra.mitraId) {
+        if (!event.mitra.active) {
+          DialogService.display(
+            context: selectMitraKey.currentContext,
+            title: 'Mitra Inactive',
+            content: 'The mitra you have selected is currently inactive, please select another mitra.',
+          );
+          return;
+        }
         print('[sys] : changing mitra : ${event.mitra.mitraId}');
         yield MitraLoaded(
           mitras: this.mitras,
@@ -87,10 +95,7 @@ class MitraBloc extends Bloc<MitraEvent, MitraState> {
           },
           (success) async* {
             print('[sys] : mitra updated');
-            this
-                .mitras[this.mitras.indexWhere(
-                    (element) => element.mitraId == event.mitra.mitraId)]
-                .customers -= 1;
+            this.mitras[this.mitras.indexWhere((element) => element.mitraId == event.mitra.mitraId)].customers -= 1;
             this.selMitra = event.mitra;
             this.selMitra.customers += 1;
             yield MitraLoaded(

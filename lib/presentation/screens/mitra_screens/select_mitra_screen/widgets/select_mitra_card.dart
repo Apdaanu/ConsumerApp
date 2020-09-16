@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:freshOk/core/constants/measure.dart';
-import 'package:freshOk/core/theme/theme.dart';
-import 'package:freshOk/domain/entities/mitra/mitra.dart';
-import 'package:freshOk/presentation/widgets/regular_text.dart';
+
+import '../../../../../core/constants/measure.dart';
+import '../../../../../core/theme/theme.dart';
+import '../../../../../domain/entities/mitra/mitra.dart';
+import '../../../../widgets/regular_text.dart';
 
 class SelectMitraCard extends StatelessWidget {
   final Color bgColor;
@@ -33,17 +34,19 @@ class SelectMitraCard extends StatelessWidget {
           vertical: 10,
         ),
         decoration: BoxDecoration(
-          color: bgColor ?? Color(0xffefefef),
+          color: mitra.active ? bgColor ?? Color(0xffefefef) : Colors.grey[50],
           borderRadius: BorderRadius.circular(2),
-          boxShadow: this.boxshadow == false
-              ? []
-              : <BoxShadow>[
-                  BoxShadow(
-                    blurRadius: 2,
-                    offset: Offset(0, 0),
-                    color: Color(0x29000000),
-                  ),
-                ],
+          boxShadow: mitra.active
+              ? this.boxshadow == false
+                  ? []
+                  : <BoxShadow>[
+                      BoxShadow(
+                        blurRadius: 2,
+                        offset: Offset(0, 0),
+                        color: Color(0x29000000),
+                      ),
+                    ]
+              : [],
         ),
         child: Row(
           children: <Widget>[
@@ -62,14 +65,14 @@ class SelectMitraCard extends StatelessWidget {
                     children: <Widget>[
                       RegularText(
                         text: mitra.name,
-                        color: textColor ?? AppTheme.black2,
+                        color: mitra.active ? textColor ?? AppTheme.black2 : Colors.grey,
                         fontSize: AppTheme.smallTextSize,
                       ),
                       SizedBox(width: 10),
                       mitra.businessName != null && mitra.businessName != ''
                           ? RegularText(
                               text: "( ${mitra.businessName} )",
-                              color: textColor ?? AppTheme.black2,
+                              color: mitra.active ? textColor ?? AppTheme.black2 : Colors.grey,
                               fontSize: AppTheme.extraSmallTextSize,
                               fontWeight: FontWeight.w600,
                             )
@@ -79,26 +82,32 @@ class SelectMitraCard extends StatelessWidget {
                 ),
                 RegularText(
                   text: mitra.mob,
-                  color: textColor ?? AppTheme.black2,
+                  color: mitra.active ? textColor ?? AppTheme.black2 : Colors.grey,
                   fontSize: AppTheme.smallTextSize,
                 ),
               ],
             ),
             Expanded(child: Container()),
-            Column(
-              children: <Widget>[
-                RegularText(
-                  text: mitra.customers.toString(),
-                  color: textColor ?? AppTheme.black2,
-                  fontSize: AppTheme.smallTextSize,
-                ),
-                RegularText(
-                  text: "Customers",
-                  color: textColor ?? AppTheme.black2,
-                  fontSize: AppTheme.extraSmallTextSize,
-                ),
-              ],
-            )
+            mitra.active
+                ? Column(
+                    children: <Widget>[
+                      RegularText(
+                        text: mitra.customers.toString(),
+                        color: textColor ?? AppTheme.black2,
+                        fontSize: AppTheme.smallTextSize,
+                      ),
+                      RegularText(
+                        text: "Customers",
+                        color: textColor ?? AppTheme.black2,
+                        fontSize: AppTheme.extraSmallTextSize,
+                      ),
+                    ],
+                  )
+                : RegularText(
+                    text: 'Inactive',
+                    color: Colors.grey,
+                    fontSize: AppTheme.smallTextSize,
+                  ),
           ],
         ),
       ),

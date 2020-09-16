@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:freshOk/core/constants/measure.dart';
-import 'package:freshOk/core/theme/theme.dart';
-import 'package:freshOk/presentation/screens/registration_screen.dart/bloc/registration_screen_bloc.dart';
-import 'package:freshOk/presentation/widgets/custom_button.dart';
-import 'package:freshOk/presentation/widgets/display_screen.dart';
-import 'package:freshOk/presentation/widgets/regular_text.dart';
+
+import '../../../../core/constants/measure.dart';
+import '../../../../core/theme/theme.dart';
+import '../../../widgets/custom_button.dart';
+import '../../../widgets/display_screen.dart';
+import '../../../widgets/regular_text.dart';
+import '../../registration_screen.dart/bloc/registration_screen_bloc.dart';
 
 class ActivateReferralScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    RegistrationScreenBloc registrationScreenBloc =
-        context.bloc<RegistrationScreenBloc>();
+    RegistrationScreenBloc registrationScreenBloc = context.bloc<RegistrationScreenBloc>();
     Measure measure = MeasureImpl(context);
     return DisplayScreen(
       body: Center(

@@ -61,10 +61,11 @@ class RecepieRemoteDatasourceImpl implements RecepieRemoteDatasource {
         HttpHeaders.authorizationHeader: 'Bearer $token',
       },
     );
+    print('[dbg] : ${response.statusCode}');
+    print('[dbg] : ${response.body}');
     if (response.statusCode == 200) {
       final decoded = json.decode(response.body);
-      final List sections =
-          decoded.map((category) => CategoryModel.fromJson(category)).toList();
+      final List sections = decoded.map((category) => CategoryModel.fromJson(category)).toList();
       return sections;
     } else {
       throw ServerException();
@@ -83,8 +84,7 @@ class RecepieRemoteDatasourceImpl implements RecepieRemoteDatasource {
     );
     if (response.statusCode == 200) {
       final decoded = json.decode(response.body);
-      final List recepies =
-          decoded.map((recepie) => RecepieModel.fromJson(recepie)).toList();
+      final List recepies = decoded.map((recepie) => RecepieModel.fromJson(recepie)).toList();
       return recepies;
     } else {
       throw ServerException();
@@ -103,8 +103,7 @@ class RecepieRemoteDatasourceImpl implements RecepieRemoteDatasource {
     );
     if (response.statusCode == 200) {
       final decoded = json.decode(response.body);
-      final List recepies =
-          decoded.map((recepie) => RecepieModel.fromJson(recepie)).toList();
+      final List recepies = decoded.map((recepie) => RecepieModel.fromJson(recepie)).toList();
       return recepies;
     } else {
       throw ServerException();
@@ -123,8 +122,7 @@ class RecepieRemoteDatasourceImpl implements RecepieRemoteDatasource {
     );
     if (response.statusCode == 200) {
       final decoded = json.decode(response.body);
-      final List recepies =
-          decoded.map((recepie) => RecepieModel.fromJson(recepie)).toList();
+      final List recepies = decoded.map((recepie) => RecepieModel.fromJson(recepie)).toList();
       return recepies;
     } else {
       throw ServerException();
@@ -159,8 +157,7 @@ class RecepieRemoteDatasourceImpl implements RecepieRemoteDatasource {
   }) async {
     final String token = await tokenProvider.getToken();
     final response = await client.get(
-      Connection.endpoint +
-          '/api/customer/$userId/recipeSection/$sectionId/$type/$categoryId',
+      Connection.endpoint + '/api/customer/$userId/recipeSection/$sectionId/$type/$categoryId',
       headers: {
         HttpHeaders.contentTypeHeader: 'application/json',
         HttpHeaders.authorizationHeader: 'Bearer $token',
@@ -168,8 +165,7 @@ class RecepieRemoteDatasourceImpl implements RecepieRemoteDatasource {
     );
     if (response.statusCode == 200) {
       final decoded = json.decode(response.body);
-      final List recepies =
-          decoded.map((recepie) => RecepieModel.fromJson(recepie)).toList();
+      final List recepies = decoded.map((recepie) => RecepieModel.fromJson(recepie)).toList();
       return recepies;
     } else {
       throw ServerException();
@@ -209,8 +205,7 @@ class RecepieRemoteDatasourceImpl implements RecepieRemoteDatasource {
     );
     if (response.statusCode == 200) {
       final decoded = json.decode(response.body);
-      final List dishTypes =
-          decoded.map((type) => TypeCategoryModel.fromJson(type)).toList();
+      final List dishTypes = decoded.map((type) => TypeCategoryModel.fromJson(type)).toList();
       return dishTypes;
     } else {
       throw ServerException();
@@ -229,8 +224,7 @@ class RecepieRemoteDatasourceImpl implements RecepieRemoteDatasource {
     );
     if (response.statusCode == 200) {
       final decoded = json.decode(response.body);
-      final List dishTypes =
-          decoded.map((type) => TypeCategoryModel.fromJson(type)).toList();
+      final List dishTypes = decoded.map((type) => TypeCategoryModel.fromJson(type)).toList();
       return dishTypes;
     } else {
       throw ServerException();
@@ -249,9 +243,7 @@ class RecepieRemoteDatasourceImpl implements RecepieRemoteDatasource {
     );
     if (response.statusCode == 200) {
       final decoded = json.decode(response.body);
-      final List searchRes = decoded
-          .map((recepie) => SearchResponseModel.fromJson(recepie))
-          .toList();
+      final List searchRes = decoded.map((recepie) => SearchResponseModel.fromJson(recepie)).toList();
       return searchRes;
     } else {
       throw ServerException();

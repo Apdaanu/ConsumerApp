@@ -17,12 +17,10 @@ class CartDeliveryPartnerSection extends StatefulWidget {
   const CartDeliveryPartnerSection({Key key}) : super(key: key);
 
   @override
-  _CartDeliveryPartnerSectionState createState() =>
-      _CartDeliveryPartnerSectionState();
+  _CartDeliveryPartnerSectionState createState() => _CartDeliveryPartnerSectionState();
 }
 
-class _CartDeliveryPartnerSectionState
-    extends State<CartDeliveryPartnerSection> {
+class _CartDeliveryPartnerSectionState extends State<CartDeliveryPartnerSection> {
   MitraBloc _mitraBloc;
   UserDetailsBloc _userDetailsBloc;
 
@@ -31,12 +29,12 @@ class _CartDeliveryPartnerSectionState
     super.initState();
     _mitraBloc = context.bloc<MitraBloc>();
     _userDetailsBloc = context.bloc<UserDetailsBloc>();
-    _mitraBloc.add(
-      MitraInitEvent(
-        mitraId: _userDetailsBloc.userDetails.mitraId,
-        userId: _userDetailsBloc.userDetails.userId,
-      ),
-    );
+    // _mitraBloc.add(
+    //   MitraInitEvent(
+    //     mitraId: _userDetailsBloc.userDetails.mitraId,
+    //     userId: _userDetailsBloc.userDetails.userId,
+    //   ),
+    // );
   }
 
   @override
@@ -67,11 +65,28 @@ class _CartDeliveryPartnerSectionState
                   cubit: _mitraBloc,
                   builder: (context, state) {
                     if (state is MitraLoaded) {
-                      return RegularText(
-                        text: state.selMitra != null ? "Change" : "Select",
-                        color: AppTheme.primaryColor,
-                        fontSize: AppTheme.extraSmallTextSize,
-                        fontWeight: FontWeight.bold,
+                      return Row(
+                        children: <Widget>[
+                          RegularText(
+                            text: state.selMitra != null ? "Change" : "Select",
+                            color: AppTheme.primaryColor,
+                            fontSize: AppTheme.extraSmallTextSize,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          if (_mitraBloc.selMitra == null || !_mitraBloc.selMitra.active)
+                            Container(
+                              margin: EdgeInsets.only(left: 10),
+                              child: CircleAvatar(
+                                radius: 6,
+                                backgroundColor: Colors.red,
+                                child: Icon(
+                                  Icons.priority_high,
+                                  color: Colors.white,
+                                  size: 8,
+                                ),
+                              ),
+                            ),
+                        ],
                       );
                     }
                     return Container();
@@ -90,7 +105,7 @@ class _CartDeliveryPartnerSectionState
                       textColor: AppTheme.black3,
                       mitra: state.selMitra,
                       boxshadow: false,
-                      onTap: () {
+                      onTap: (mitra) {
                         Navigator.pushNamed(context, selectMitraRoute);
                       },
                     );

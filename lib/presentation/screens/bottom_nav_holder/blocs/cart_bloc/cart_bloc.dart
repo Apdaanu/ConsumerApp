@@ -1,16 +1,16 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
-import 'package:freshOk/core/usecases/usecase.dart';
-import 'package:freshOk/domain/entities/categories/product.dart';
-import 'package:freshOk/domain/entities/order/local_cart.dart';
-import 'package:freshOk/domain/usecases/orders/clear_local_cart.dart';
-import 'package:freshOk/domain/usecases/orders/get_local_cart.dart';
-import 'package:freshOk/domain/usecases/orders/remove_from_local_cart.dart';
-import 'package:freshOk/domain/usecases/orders/set_local_cart.dart';
+
+import '../../../../../core/usecases/usecase.dart';
+import '../../../../../domain/entities/categories/product.dart';
+import '../../../../../domain/entities/order/local_cart.dart';
+import '../../../../../domain/usecases/orders/clear_local_cart.dart';
+import '../../../../../domain/usecases/orders/get_local_cart.dart';
+import '../../../../../domain/usecases/orders/remove_from_local_cart.dart';
+import '../../../../../domain/usecases/orders/set_local_cart.dart';
 
 part 'cart_event.dart';
 part 'cart_state.dart';
@@ -52,8 +52,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         double qty;
         if (event.product.quantity == 0) {
           qty = event.product.minQty;
-        } else if (event.product.quantity + event.product.unitQty <=
-            event.product.maxQty) {
+        } else if (event.product.quantity + event.product.unitQty <= event.product.maxQty) {
           qty = event.product.quantity + event.product.unitQty;
         } else {
           qty = event.product.maxQty;
@@ -78,8 +77,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     if (event is CartDecEvent) {
       yield CartInitial();
       var failureOrCart;
-      if (event.product.quantity - event.product.unitQty >=
-          event.product.minQty) {
+      if (event.product.quantity - event.product.unitQty >= event.product.minQty) {
         failureOrCart = await setLocalCart(
           SetLocalCartParams(
             productId: event.product.productId,
@@ -102,8 +100,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         (failure) async* {},
         (cart) async* {
           this.cart = cart;
-          if (event.product.quantity - event.product.unitQty >=
-              event.product.minQty) {
+          if (event.product.quantity - event.product.unitQty >= event.product.minQty) {
             event.next(event.product.quantity - event.product.unitQty);
           } else if (event.product.quantity == event.product.minQty) {
             event.next(0.0);

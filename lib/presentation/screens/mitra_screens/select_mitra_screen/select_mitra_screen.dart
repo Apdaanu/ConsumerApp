@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freshOk/core/theme/theme.dart';
+import 'package:freshOk/presentation/widgets/regular_text.dart';
 
 import '../../../widgets/display_screen.dart';
 import '../../../widgets/top_bar.dart';
@@ -7,6 +9,8 @@ import '../../bottom_nav_holder/blocs/mitra_bloc/mitra_bloc.dart';
 import '../../bottom_nav_holder/blocs/user_details_bloc/user_details_bloc.dart';
 import 'widgets/select_mitra_my_mitra_section.dart';
 import 'widgets/select_mitra_options.dart';
+
+GlobalKey selectMitraKey = GlobalKey();
 
 class SelectMitraScreen extends StatefulWidget {
   @override
@@ -23,15 +27,16 @@ class _SelectMitraScreenState extends State<SelectMitraScreen> {
     _mitraBloc = context.bloc<MitraBloc>();
     _userDetailsBloc = context.bloc<UserDetailsBloc>();
 
-    _mitraBloc.add(MitraInitEvent(
-      mitraId: _userDetailsBloc.userDetails.mitraId,
-      userId: _userDetailsBloc.userDetails.userId,
-    ));
+    // _mitraBloc.add(MitraInitEvent(
+    //   mitraId: _userDetailsBloc.userDetails.mitraId,
+    //   userId: _userDetailsBloc.userDetails.userId,
+    // ));
   }
 
   @override
   Widget build(BuildContext context) {
     return DisplayScreen(
+      key: selectMitraKey,
       topBar: CustomTopBar(
         title: "My freshMitra",
         // action: RegularText(
@@ -57,6 +62,27 @@ class _SelectMitraScreenState extends State<SelectMitraScreen> {
           color: Colors.white,
           child: Column(
             children: <Widget>[
+              BlocBuilder(
+                cubit: _mitraBloc,
+                builder: (context, state) {
+                  if (_mitraBloc.selMitra != null && !_mitraBloc.selMitra.active)
+                    return Container(
+                      height: 50,
+                      padding: EdgeInsets.symmetric(horizontal: 15),
+                      alignment: Alignment.bottomCenter,
+                      child: RegularText(
+                        text:
+                            'Your mitra is currently unavailable, please select another mitra to continue the fresh experience.',
+                        color: AppTheme.black7,
+                        fontSize: AppTheme.smallTextSize,
+                        overflow: false,
+                        fontWeight: FontWeight.w600,
+                        textAlign: TextAlign.center,
+                      ),
+                    );
+                  return Container();
+                },
+              ),
               SelectMitraMyMitraSection(),
               SelectMitraOptions(),
             ],

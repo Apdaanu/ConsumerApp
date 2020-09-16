@@ -29,18 +29,15 @@ class _OfferSectionState extends State<OfferSection> {
     super.initState();
     _pageController = PageController();
     _pageController.addListener(() {});
-    _timer = Timer.periodic(new Duration(seconds: 70000), (Timer t) {
-      if (widget.category.subContents[_pageController.page.toInt()].mediaType !=
-          'video') {
+    _timer = Timer.periodic(new Duration(seconds: 50000), (Timer t) {
+      if (widget.category.subContents[_pageController.page.toInt()].mediaType != 'video') {
         _pageController.animateToPage(
-          (_pageController.page.toInt() + 1) %
-              widget.category.subContents.length,
+          (_pageController.page.toInt() + 1) % widget.category.subContents.length,
           duration: const Duration(milliseconds: 250),
           curve: Curves.easeInOut,
         );
         setState(() {
-          idx = (_pageController.page.toInt() + 1) %
-              widget.category.subContents.length;
+          idx = (_pageController.page.toInt() + 1) % widget.category.subContents.length;
         });
       }
     });
@@ -69,19 +66,15 @@ class _OfferSectionState extends State<OfferSection> {
                 idx = page;
               });
               _timer.cancel();
-              _timer = Timer.periodic(new Duration(seconds: 70000), (Timer t) {
-                if (widget.category.subContents[_pageController.page.toInt()]
-                        .mediaType !=
-                    'video') {
+              _timer = Timer.periodic(new Duration(seconds: 50000), (Timer t) {
+                if (widget.category.subContents[_pageController.page.toInt()].mediaType != 'video') {
                   _pageController.animateToPage(
-                    (_pageController.page.toInt() + 1) %
-                        widget.category.subContents.length,
+                    (_pageController.page.toInt() + 1) % widget.category.subContents.length,
                     duration: const Duration(milliseconds: 250),
                     curve: Curves.easeInOut,
                   );
                   setState(() {
-                    idx = (_pageController.page.toInt() + 1) %
-                        widget.category.subContents.length;
+                    idx = (_pageController.page.toInt() + 1) % widget.category.subContents.length;
                   });
                 }
               });
@@ -148,8 +141,7 @@ class _OfferSectionState extends State<OfferSection> {
         sectionId: widget.category.id,
         onVideoEnd: () {
           _pageController.animateToPage(
-            (_pageController.page.toInt() + 1) %
-                widget.category.subContents.length,
+            (_pageController.page.toInt() + 1) % widget.category.subContents.length,
             duration: const Duration(milliseconds: 250),
             curve: Curves.easeInOut,
           );

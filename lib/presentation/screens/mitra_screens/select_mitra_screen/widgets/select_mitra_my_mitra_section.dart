@@ -10,8 +10,7 @@ import 'select_mitra_card.dart';
 
 class SelectMitraMyMitraSection extends StatefulWidget {
   @override
-  _SelectMitraMyMitraSectionState createState() =>
-      _SelectMitraMyMitraSectionState();
+  _SelectMitraMyMitraSectionState createState() => _SelectMitraMyMitraSectionState();
 }
 
 class _SelectMitraMyMitraSectionState extends State<SelectMitraMyMitraSection> {
@@ -41,8 +40,7 @@ class _SelectMitraMyMitraSectionState extends State<SelectMitraMyMitraSection> {
           return Container(
             height: 140,
             width: measure.width,
-            padding:
-                EdgeInsets.symmetric(horizontal: 10 + measure.width * 0.02),
+            padding: EdgeInsets.symmetric(horizontal: 10 + measure.width * 0.02),
             decoration: BoxDecoration(
               border: Border(
                 bottom: BorderSide(
@@ -63,6 +61,19 @@ class _SelectMitraMyMitraSectionState extends State<SelectMitraMyMitraSection> {
                       fontSize: AppTheme.extraSmallTextSize,
                       fontWeight: FontWeight.w700,
                     ),
+                    if (_mitraBloc.selMitra == null || !_mitraBloc.selMitra.active)
+                      Container(
+                        margin: EdgeInsets.only(left: 10),
+                        child: CircleAvatar(
+                          radius: 6,
+                          backgroundColor: Colors.red,
+                          child: Icon(
+                            Icons.priority_high,
+                            color: Colors.white,
+                            size: 8,
+                          ),
+                        ),
+                      ),
                     SizedBox(width: 10),
                     state.postingMitra == true
                         ? SizedBox(

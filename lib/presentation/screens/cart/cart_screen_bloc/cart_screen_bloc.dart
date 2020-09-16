@@ -5,7 +5,6 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:freshOk/presentation/screens/cart/cart_screen.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 import '../../../../core/constants/routes.dart';
@@ -29,6 +28,7 @@ import '../../../../domain/usecases/services/flutter_local_notif_service.dart';
 import '../../../../main.dart';
 import '../../../widgets/regular_text.dart';
 import '../../paytm/PaymentScreen.dart';
+import '../cart_screen.dart';
 
 part 'cart_screen_event.dart';
 part 'cart_screen_state.dart';
@@ -155,8 +155,7 @@ class CartScreenBloc extends Bloc<CartScreenEvent, CartScreenState> {
       if (event.product.quantity <= event.product.maxQty) {
         yield CartScreenInitial();
         double qty;
-        if (event.product.quantity + event.product.unitQty <=
-            event.product.maxQty) {
+        if (event.product.quantity + event.product.unitQty <= event.product.maxQty) {
           qty = event.product.quantity + event.product.unitQty;
         } else {
           qty = event.product.maxQty;
@@ -170,16 +169,13 @@ class CartScreenBloc extends Bloc<CartScreenEvent, CartScreenState> {
 
     if (event is CartScreenDecQty) {
       yield CartScreenInitial();
-      if (event.product.quantity - event.product.unitQty >=
-          event.product.minQty) {
-        this.cart.cart[this.cart.cart.indexOf(event.product)].quantity =
-            event.product.quantity - event.product.unitQty;
+      if (event.product.quantity - event.product.unitQty >= event.product.minQty) {
+        this.cart.cart[this.cart.cart.indexOf(event.product)].quantity = event.product.quantity - event.product.unitQty;
         yield CartScreenLoaded(cart);
       } else if (event.product.quantity == event.product.minQty) {
         return;
       } else {
-        this.cart.cart[this.cart.cart.indexOf(event.product)].quantity =
-            event.product.minQty;
+        this.cart.cart[this.cart.cart.indexOf(event.product)].quantity = event.product.minQty;
         yield CartScreenLoaded(cart);
       }
       yield CartScreenInitial();
@@ -343,8 +339,7 @@ class CartScreenBloc extends Bloc<CartScreenEvent, CartScreenState> {
 
               yield* failureOrPaymentOrder.fold(
                 (failure) async* {
-                  print(
-                      '[err] : payment order creation failed : ${failure.code}');
+                  print('[err] : payment order creation failed : ${failure.code}');
                 },
                 (paymentOrder) async* {
                   this.paymentOrder = paymentOrder;
@@ -357,10 +352,7 @@ class CartScreenBloc extends Bloc<CartScreenEvent, CartScreenState> {
                     'amount': paymentOrder.amount,
                     'name': 'freshOk',
                     'order_id': paymentOrder.id,
-                    'prefill': {
-                      'contact': event.mob,
-                      'email': 'yestsalvo@gmail.com'
-                    },
+                    'prefill': {'contact': event.mob, 'email': 'yestsalvo@gmail.com'},
                     'external': {
                       'wallets': ['paytm'],
                     }
@@ -428,9 +420,7 @@ class CartScreenBloc extends Bloc<CartScreenEvent, CartScreenState> {
 
     final double itemTotal = double.parse(costs['itemTotal']);
 
-    double credits = min(itemTotal * this.cart.creditLimit, this.freshOkCredit)
-        .floor()
-        .toDouble();
+    double credits = min(itemTotal * this.cart.creditLimit, this.freshOkCredit).floor().toDouble();
     if (credits < 0) {
       this.usedCredits = 0;
     } else {
@@ -491,11 +481,9 @@ class CartScreenBloc extends Bloc<CartScreenEvent, CartScreenState> {
 
   Future<void> handlePlaceOrder(paymentResponse) async {
     print('[sys] : placing order');
-    final String dateString = this.selYear.toString() +
-        this.selMonth.toString().padLeft(2, '0') +
-        this.selDate.toString().padLeft(2, '0');
-
-    final String utcString = DateTime.parse(dateString).toIso8601String();
+    final String dateString =
+        this.selYear.toString() + this.selMonth.toString().padLeft(2, '0') + this.selDate.toString().padLeft(2, '0');
+    final String utcString = DateTime.parse(dateString).add(Duration(days: 1)).toUtc().toString();
     print('[dbg] : ${this.paymentMode} ------------------------->');
     final failureOrOrder = await placeOrder(
       PlaceOrderParams(

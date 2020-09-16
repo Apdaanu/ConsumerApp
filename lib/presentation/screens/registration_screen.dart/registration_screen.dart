@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:freshOk/core/constants/routes.dart';
-import 'package:freshOk/injection_container.dart';
-import 'package:freshOk/presentation/screens/referral_screens/activate_referral/activate_referral_screen.dart';
-import 'package:freshOk/presentation/screens/registration_screen.dart/bloc/registration_screen_bloc.dart';
-import 'package:freshOk/presentation/screens/select_city_area_screen/select_city_area.dart';
 
 import '../../../core/constants/measure.dart';
+import '../../../core/constants/routes.dart';
+import '../../../injection_container.dart';
+import '../referral_screens/activate_referral/activate_referral_screen.dart';
+import '../select_city_area_screen/select_city_area.dart';
+import 'bloc/registration_screen_bloc.dart';
 
 // part 'widgets/registration_screen_body_widget.dart';
 
@@ -99,8 +99,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               list: state is RegisterUserCitySelected ? state.places : [],
               title: "Select Area",
               ddFxn: (areaId) {
-                _registrationScreenBloc
-                    .add(RegisterUserSelectAreaEvent(areaId));
+                _registrationScreenBloc.add(RegisterUserSelectAreaEvent(areaId));
               },
               backAlt: () {
                 _registrationScreenBloc.add(RegisterUserGoBackEvent());

@@ -10,7 +10,7 @@ class DiscountModel extends Discount {
   factory DiscountModel.fromJson(Map<String, dynamic> json) {
     return DiscountModel(
       discountType: json['discountType'],
-      discountValue: json['discountValue'].toDouble(),
+      discountValue: json['discountValue'] != null ? json['discountValue'].toDouble() : 0,
     );
   }
 }

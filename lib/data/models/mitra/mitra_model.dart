@@ -9,6 +9,7 @@ class MitraModel extends Mitra {
     @required int customers,
     @required String profilePhoto,
     @required String mitraId,
+    @required bool active,
   }) : super(
           name: name,
           businessName: businessName,
@@ -16,16 +17,18 @@ class MitraModel extends Mitra {
           customers: customers,
           profilePhoto: profilePhoto,
           mitraId: mitraId,
+          active: active,
         );
 
   factory MitraModel.fromJson(Map<String, dynamic> json) {
     return MitraModel(
       name: json['name'],
-      businessName: json['businessName'],
+      businessName: json['nickname'],
       mob: json['mob'].toString(),
       customers: json['customers'].map((item) => 0).toList().length,
       profilePhoto: json['profilePhoto'],
       mitraId: json['userId'],
+      active: json['active'],
     );
   }
 }
